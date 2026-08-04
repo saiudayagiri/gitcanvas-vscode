@@ -1,0 +1,95 @@
+{
+  "name": "gitcanvas",
+  "displayName": "GitCanvas",
+  "description": "See what Git is thinking — an interactive commit graph, working-tree pipeline, merge/rebase simulators, reflog, and blame that run real git commands, right inside VS Code.",
+  "version": "1.0.0",
+  "publisher": "saiudayagiri",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saiudayagiri/gitcanvas-vscode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/saiudayagiri/gitcanvas-vscode/issues"
+  },
+  "homepage": "https://github.com/saiudayagiri/gitcanvas-vscode#readme",
+  "keywords": [
+    "git",
+    "visualization",
+    "commit graph",
+    "learn git",
+    "education",
+    "merge",
+    "rebase",
+    "beginners"
+  ],
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Education",
+    "SCM Providers",
+    "Visualization"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "gitCanvas.open",
+        "title": "GitCanvas: Open",
+        "icon": "$(git-branch)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "gitCanvas",
+          "title": "GitCanvas",
+          "icon": "media/activity-bar-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "gitCanvas": [
+        {
+          "id": "gitCanvas.branches",
+          "name": "Branches"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "gitCanvas.open",
+          "when": "view == gitCanvas.branches",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "build:webview": "npm --prefix webview-ui run build",
+    "compile": "npm run check-types && node esbuild.js && npm run build:webview",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "check-types": "tsc --noEmit",
+    "package": "npm run check-types && node esbuild.js --production && npm run build:webview",
+    "compile-tests": "tsc -p . --outDir out",
+    "pretest": "npm run compile-tests && npm run compile",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.90.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^3.1.0",
+    "esbuild": "^0.28.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.5.0"
+  }
+}
