@@ -11,13 +11,13 @@ async function waitFor(predicate: () => boolean, timeoutMs = 10_000, intervalMs 
 }
 
 async function getExports() {
-  const ext = vscode.extensions.getExtension("saiudayagiri.gitcanvas")!;
+  const ext = vscode.extensions.getExtension("saiudayagiri.gitcanvas-vscode")!;
   return ext.activate();
 }
 
 suite("GitCanvas extension", () => {
   test("activates and registers the open command", async () => {
-    const ext = vscode.extensions.getExtension("saiudayagiri.gitcanvas");
+    const ext = vscode.extensions.getExtension("saiudayagiri.gitcanvas-vscode");
     assert.ok(ext, "extension should be discoverable");
     await ext!.activate();
 

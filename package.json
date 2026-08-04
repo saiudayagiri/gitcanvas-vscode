@@ -1,6 +1,6 @@
 {
-  "name": "gitcanvas",
-  "displayName": "GitCanvas",
+  "name": "gitcanvas-vscode",
+  "displayName": "GitCanvas — See What Git Is Thinking",
   "description": "See what Git is thinking — an interactive commit graph, working-tree pipeline, merge/rebase simulators, reflog, and blame that run real git commands, right inside VS Code.",
   "version": "1.0.0",
   "publisher": "saiudayagiri",
