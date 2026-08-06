@@ -214,6 +214,7 @@ interface UIState {
   removedRemoteNames: string[];
   addRemote: (name: string, url: string) => string | null;
   removeRemote: (name: string) => string | null;
+  editRemote: (name: string, url: string) => string | null;
   /** The real remote list from the last hydrated snapshot — empty in standalone browser
    * preview, where RemoteSyncPage falls back to the mock `remote` + additionalRemotes/
    * removedRemoteNames simulation instead. */
@@ -684,6 +685,19 @@ export const useUIStore = create<UIState>((set, get) => ({
     set((s) => ({ removedRemoteNames: [...s.removedRemoteNames, name] }));
     get().logCommand(`git remote remove ${name}`);
     dispatchRealCommand({ kind: "removeRemote", name }, set, get);
+    return null;
+  },
+  editRemote: (name, url) => {
+    const trimmedUrl = url.trim();
+    if (!trimmedUrl) return "A URL is required.";
+    // optimistic update in both places a remote can live: the hydrated real list and the
+    // session-added list — the post-command snapshot refresh reconciles with ground truth.
+    set((s) => ({
+      remotes: s.remotes.map((r) => (r.name === name ? { ...r, url: trimmedUrl } : r)),
+      additionalRemotes: s.additionalRemotes.map((r) => (r.name === name ? { ...r, url: trimmedUrl } : r)),
+    }));
+    get().logCommand(`git remote set-url ${name} ${trimmedUrl}`);
+    dispatchRealCommand({ kind: "setRemoteUrl", name, url: trimmedUrl }, set, get);
     return null;
   },
 

@@ -137,6 +137,7 @@ export type GitCommand =
   | { kind: "clean" }
   | { kind: "pushForce" }
   | { kind: "addRemote"; name: string; url: string }
+  | { kind: "setRemoteUrl"; name: string; url: string }
   | { kind: "removeRemote"; name: string }
   | { kind: "setConfig"; key: "user.name" | "user.email" | "init.defaultBranch" | "core.editor"; value: string }
   | { kind: "resolveConflictFile"; path: string; resolution: "ours" | "theirs" | "both" | "manual"; content?: string }

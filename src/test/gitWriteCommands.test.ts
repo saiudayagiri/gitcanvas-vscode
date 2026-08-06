@@ -195,10 +195,14 @@ suite("Git write commands mutate the real repository", () => {
     assert.ok(!fs.existsSync(path.join(cwd, "untracked-b.txt")));
   });
 
-  test("addRemote and removeRemote manage real remotes", async () => {
+  test("addRemote, setRemoteUrl, and removeRemote manage real remotes", async () => {
     await runGitCommand(cwd, { kind: "addRemote", name: "upstream", url: "https://example.invalid/repo.git" });
     let remotes = await git(cwd, ["remote", "-v"]);
     assert.match(remotes, /^upstream\s+https:\/\/example\.invalid\/repo\.git/m);
+
+    await runGitCommand(cwd, { kind: "setRemoteUrl", name: "upstream", url: "https://example.invalid/moved.git" });
+    remotes = await git(cwd, ["remote", "-v"]);
+    assert.match(remotes, /^upstream\s+https:\/\/example\.invalid\/moved\.git/m, "set-url should replace the URL");
 
     await runGitCommand(cwd, { kind: "removeRemote", name: "upstream" });
     remotes = await git(cwd, ["remote", "-v"]);

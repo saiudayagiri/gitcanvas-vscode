@@ -11,6 +11,7 @@ import { EducationalNote } from "@/components/ui/EducationalNote";
 import { AvatarStack } from "@/components/ui/Avatar";
 import { authors, timeAgo, getCommit } from "@/lib/mock-data";
 import { useCurrentBranch, useHeadHash, useBranchAhead, useAllBranches } from "@/hooks/useCurrentBranch";
+import { RemotesPanel, IdentityPanel } from "@/components/dashboard/RemotesAndIdentity";
 import { useUIStore } from "@/store/ui-store";
 
 export function Dashboard() {
@@ -95,6 +96,15 @@ export function Dashboard() {
           delay={0.2}
           detail={<AvatarStack authors={activeContributors} size={18} />}
         />
+      </div>
+
+      <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-5">
+        <div className="lg:col-span-3">
+          <RemotesPanel />
+        </div>
+        <div className="lg:col-span-2">
+          <IdentityPanel />
+        </div>
       </div>
 
       <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-5">

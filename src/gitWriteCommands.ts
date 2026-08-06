@@ -180,6 +180,8 @@ export async function runGitCommand(repoRoot: string, command: GitCommand): Prom
         : git(repoRoot, ["push", "--force", "-u", "origin", "HEAD"]);
     case "addRemote":
       return git(repoRoot, ["remote", "add", command.name, command.url]);
+    case "setRemoteUrl":
+      return git(repoRoot, ["remote", "set-url", command.name, command.url]);
     case "removeRemote":
       return git(repoRoot, ["remote", "remove", command.name]);
     case "setConfig":
